@@ -6,17 +6,15 @@ import java.util.Scanner;
 public class drugie {
 
 	public static void main(String[] args) {
-ArrayList<Integer> pomiary = new ArrayList<Integer>();
-		
-		try (Scanner s = new Scanner(new File("pomiary.txt"))) {
+		ArrayList<Integer> measurements = new ArrayList<Integer>();
 
-			//s.nextLine();
+		try (Scanner s = new Scanner(new File("pomiary.txt"))) {
 
 			s.useDelimiter(";|\\r?\\n|\\r");
 
 			while (s.hasNext()) {
 
-				pomiary.add(s.nextInt());
+				measurements.add(s.nextInt());
 			}
 		}
 
@@ -24,17 +22,16 @@ ArrayList<Integer> pomiary = new ArrayList<Integer>();
 			e.printStackTrace();
 			System.out.println("Blad e");
 		}
-		
-		int licznik = 0;
-		
-		for (int i = 0; i < pomiary.size() - 3; i++) {
-			if ((pomiary.get(i) + pomiary.get(i+1) + pomiary.get(i+2))< (pomiary.get(i+1) + pomiary.get(i+2) + pomiary.get(i+3)))
-				licznik++;
-		}
-		
-		System.out.println(licznik);
 
+		int counter = 0;
+
+		for (int i = 0; i < measurements.size() - 3; i++) {
+			if ((measurements.get(i) + measurements.get(i + 1) + measurements.get(i + 2)) < (measurements.get(i + 1)
+					+ measurements.get(i + 2) + measurements.get(i + 3)))
+				counter++;
+		}
+
+		System.out.println(counter);
 
 	}
-
 }
