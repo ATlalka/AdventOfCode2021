@@ -25,7 +25,7 @@ public class drugie {
 
 		int counter = 0;
 
-		for (int i = 0; i < measurements.size() - 3; i++) {
+		for (int i = 0; i < measurements.size() - 3; i++) { // iterujemy po kolei po pomiarach
 
 			// jesli aktualny pomiar zsumowany z 2 nastepnymi jest mniejszy niz suma 3
 			// nastepnych
