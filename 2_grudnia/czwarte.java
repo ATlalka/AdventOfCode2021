@@ -12,6 +12,8 @@ public class czwarte {
 			s.useDelimiter(";|\\r?\\n|\\r");
 
 			while (s.hasNext()) {
+
+				// wczytujemy kolejne komendy i odpowiednio modyfikujemy depth, aim i horizontal
 				String[] tab = s.next().split(" ");
 				switch (tab[0]) {
 
