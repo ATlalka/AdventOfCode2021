@@ -12,6 +12,7 @@ public class trzecie {
 			s.useDelimiter(";|\\r?\\n|\\r");
 
 			while (s.hasNext()) {
+				// wczytujemy kolejne komendy i odpowiednio modifkujemy horizontal i depth
 				String[] tab = s.next().split(" ");
 				switch (tab[0]) {
 
