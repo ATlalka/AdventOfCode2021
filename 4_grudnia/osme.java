@@ -7,16 +7,19 @@ public class osme {
 
 	public static void main(String[] args) {
 
-		ArrayList<Integer> numbers = new ArrayList<>();
-		ArrayList<Integer[][]> boards = new ArrayList<>();
-		ArrayList<Boolean[][]> results = new ArrayList<>();
-		ArrayList<Integer> notWonYet = new ArrayList<>();
+		ArrayList<Integer> numbers = new ArrayList<>(); // kolejne wygrywajace liczby
+		ArrayList<Integer[][]> boards = new ArrayList<>(); // kolejne plansze
+		ArrayList<Boolean[][]> results = new ArrayList<>(); // skreslenia na kolejnych planszach
+		ArrayList<Integer> notWonYet = new ArrayList<>(); // lista plansz, ktore do tej pory nie wygraly
 
 		File f = new File("bingo.txt");
 
 		try (Scanner s = new Scanner(f)) {
 
 			s.useDelimiter(";|\\r?\\n|\\r");
+
+			// pobieram pierwsza linie pliku, ktora oznacza kolejne wygrywajace liczby
+			// usuwam przecinki i zapisuje liczby do listy
 			String[] allResults = s.next().split("[,]");
 
 			for (int i = 0; i < allResults.length; i++) {
@@ -31,13 +34,17 @@ public class osme {
 				Integer[][] currentAnswers = new Integer[5][5];
 				Boolean[][] x = new Boolean[5][5];
 
+				// ustawiam skreslenia na planszach na false
 				for (int i = 0; i < 5; i++) {
 
 					for (int j = 0; j < 5; j++) {
+
 						x[i][j] = false;
 					}
 				}
 
+				// wczytuje kolejne plansze i dodaje je do listy wraz z wyzerowanymi
+				// skresleniami
 				for (int i = 0; i < 5; i++) {
 
 					String line = s.next();
@@ -65,44 +72,52 @@ public class osme {
 			System.out.println("Blad e");
 		}
 
-		int boardNumber = -1;
-		int finalNumber = -1;
+		int boardNumber = -1; // numer ostatniej wygrywajacej planszy
+		int finalNumber = -1; // numer, dzieki ktoremu plansza wygrala
 		int score = 0;
 
+		// dodaje wszystkie plansze do plansz, ktore jeszcze nie wygraly
 		for (int i = 0; i < boards.size(); i++) {
+
 			notWonYet.add(i + 1);
 		}
 
+		// iteruje po kolei po liczbach
 		for (int i = 0; i < numbers.size(); i++) {
 
 			Integer number = numbers.get(i);
 
+			// iteruje po kolei po planszach
 			for (int j = 0; j < boards.size(); j++) {
 
+				// sprawdzam, czy liczba jest na planszy i jesli tak to ja skreslam i sprawdzam
+				// czy plansza jest wygrywajaca
 				if (findNumberInBoard(boards.get(j), number, results.get(j)))
 
 					if (checkIfWinning(results.get(j))) {
 
-						if (notWonYet.indexOf(j + 1) >= 0)
+						if (notWonYet.indexOf(j + 1) >= 0) // jesli plansza nie wygrala wczesniej to usuwamy ja z listy
+															// plansz, ktore do tej pory nie wygraly
 							notWonYet.remove(notWonYet.indexOf(j + 1));
 
 						finalNumber = number;
 					}
 
-				if (notWonYet.size() == 1)
-					boardNumber = notWonYet.get(0);
+				if (notWonYet.size() == 1) // zostala jedna plansza, wiec to bedzie ostatnia
+					boardNumber = notWonYet.get(0); // ale trzeba jeszcze znalezc liczbe, dzieki ktorej ta plansza wygra
 
-				if (notWonYet.size() == 0)
+				if (notWonYet.size() == 0) // ostatnia plansza wygrala, mozna zakonczyc przegladanie
 					break;
 			}
 
-			if (notWonYet.size() == 0)
+			if (notWonYet.size() == 0) // ostatnia plansza wygrala, mozna zakonczyc przegladanie
 				break;
 		}
 
 		Boolean[][] finalResult = results.get(boardNumber - 1);
 		Integer[][] finalBoard = boards.get(boardNumber - 1);
 
+		// zliczam sume nieskreslonych liczb
 		for (int i = 0; i < 5; i++) {
 
 			for (int j = 0; j < 5; j++) {
@@ -115,6 +130,7 @@ public class osme {
 		System.out.println(finalNumber * score);
 	}
 
+	// sprawdza, czy plansza wygrala
 	static boolean checkIfWinning(Boolean[][] board) {
 
 		boolean ifColumn = true;
@@ -157,6 +173,7 @@ public class osme {
 		return false;
 	}
 
+	// szuka liczby na planszy i ja odznacza
 	static boolean findNumberInBoard(Integer[][] board, int number, Boolean[][] result) {
 
 		boolean atLeastOne = false;
