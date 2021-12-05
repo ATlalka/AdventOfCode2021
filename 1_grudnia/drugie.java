@@ -12,9 +12,9 @@ public class drugie {
 
 			s.useDelimiter(";|\\r?\\n|\\r");
 
-			while (s.hasNext()) {
+			while (s.hasNext()) { // wczytujemy po kolei pomiary
 
-				measurements.add(s.nextInt());
+				measurements.add(s.nextInt()); // i zapisujemy do listy
 			}
 		}
 
@@ -26,9 +26,12 @@ public class drugie {
 		int counter = 0;
 
 		for (int i = 0; i < measurements.size() - 3; i++) {
+
+			// jesli aktualny pomiar zsumowany z 2 nastepnymi jest mniejszy niz suma 3
+			// nastepnych
 			if ((measurements.get(i) + measurements.get(i + 1) + measurements.get(i + 2)) < (measurements.get(i + 1)
 					+ measurements.get(i + 2) + measurements.get(i + 3)))
-				counter++;
+				counter++; // zwiekszamy licznik
 		}
 
 		System.out.println(counter);
