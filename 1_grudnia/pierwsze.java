@@ -13,9 +13,9 @@ public class pierwsze {
 
 			s.useDelimiter(";|\\r?\\n|\\r");
 
-			while (s.hasNext()) {
+			while (s.hasNext()) { // wczytujemy wszystkie pomiary
 
-				measurement.add(s.nextInt());
+				measurement.add(s.nextInt()); // i dodajemy je do listy
 			}
 		}
 
@@ -26,9 +26,10 @@ public class pierwsze {
 
 		int counter = 0;
 
-		for (int i = 0; i < measurement.size() - 1; i++) {
-			if (measurement.get(i) < measurement.get(i + 1))
-				counter++;
+		for (int i = 0; i < measurement.size() - 1; i++) { // iterujemy po kolei po pomiarach
+
+			if (measurement.get(i) < measurement.get(i + 1)) // jesli obecne jest mniejsze niz nastepne
+				counter++; // zwiekszamy licznik
 		}
 
 		System.out.println(counter);
